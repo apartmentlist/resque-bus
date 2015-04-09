@@ -20,4 +20,3 @@ def perform_next_job(worker, &block)
   worker.perform(job, &block)
   worker.done_working
 end
-
