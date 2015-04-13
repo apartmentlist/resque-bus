@@ -41,7 +41,7 @@ namespace :queuebus do
   Rake::Task[:unsubscribe].enhance [:use_queuebus_redis]
 
   desc 'Setup will configure a resque task to run before resque:work'
-  task setup: [:preload, :set_redis_server] do
+  task setup: [:preload, :use_queuebus_redis, :set_redis_server] do
 
     if ENV['QUEUES'].nil?
       manager = ::QueueBus::TaskManager.new(true)
