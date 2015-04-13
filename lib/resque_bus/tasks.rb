@@ -33,6 +33,7 @@ namespace :queuebus do
   task :set_redis_server do
     unless ENV['USE_QUEUEBUS_REDIS'].nil?
       Resque.redis = QueueBus.adapter.queuebus_redis
+      puts "set Resque.redis = #{Resque.redis}"
     end
   end
 
@@ -62,6 +63,7 @@ namespace :queuebus do
   task :use_queuebus_redis do
     # We pass state through the environment because the actual worker runs
     # in a different process
+    puts "set ENV[USE_QUEUEBUS_REDIS] = true"
     ENV['USE_QUEUEBUS_REDIS'] = 'true'
   end
 
