@@ -83,6 +83,8 @@ module QueueBus
         ::Resque.schedule[name] = schedule
       end
 
+      private
+
       module RetryHandlers
         # @failure_hooks_already_ran on https://github.com/defunkt/resque/tree/1-x-stable
         # to prevent running twice
@@ -94,7 +96,7 @@ module QueueBus
           # note: sorted alphabetically
           # queue needs to be set for rety to work (know what queue in Requeue.class_to_queue)
           hash = ::QueueBus::Util.decode(args[0])
-          @my_queue = hash['bus_rider_queue']
+          @my_queue = hash["bus_rider_queue"]
         end
 
         def on_failure_zzz(exception, *args)
