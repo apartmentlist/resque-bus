@@ -32,7 +32,6 @@ describe "adapter is set" do
   context 'with a custom QueueBus Redis configuration' do
     let(:resque_url) { 'redis://localhost:6379/0' }
     let(:queuebus_url) { 'redis://localhost:6379/1' }
-    let(:active_url) { ::Resque.redis.redis.client.options[:url] }
 
     before(:each) do
       Resque.redis = resque_url
@@ -40,12 +39,12 @@ describe "adapter is set" do
     end
 
     it 'still uses the default for Resque jobs' do
-      active_url.should eq(resque_url)
+      ::Resque.redis.redis.client.options[:url].should eq(resque_url)
     end
 
     it 'uses the custom Redis instance for QueueBus jobs' do
       QueueBus.adapter.redis do
-        active_url.should eq(queuebus_url)
+        ::Resque.redis.redis.client.options[:url].should eq(queuebus_url)
       end
     end
 

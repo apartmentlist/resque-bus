@@ -29,12 +29,15 @@ module QueueBus
 
             # Save the default Resque redis connection
             default_redis = ::Resque.redis
-            # Get Resque to generate the connection given the server definition
-            ::Resque.redis = @queuebus_redis_url
-            # Store the Redis namespace that Resque created...
-            @queuebus_redis = ::Resque.redis
-            # ...and restore the default.
-            ::Resque.redis = default_redis
+            begin
+              # Get Resque to generate the connection given the server definition
+              ::Resque.redis = @queuebus_redis_url
+              # Store the Redis namespace that Resque created...
+              @queuebus_redis = ::Resque.redis
+            ensure
+              # ...and restore the default.
+              ::Resque.redis = default_redis
+            end
             @queuebus_redis
           else
             ::Resque.redis
